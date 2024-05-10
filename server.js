@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 const server = jsonServer.create();
 const router = jsonServer.router("./db.json");
-let userdb = JSON.parse(fs.readFileSync("./api-bytebank/usuarios.json", "utf-8"));
+let userdb = JSON.parse(fs.readFileSync("./usuarios.json", "utf-8"));
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
@@ -45,7 +45,7 @@ server.post("/public/cadastrar", (req, res) => {
     res.status(status).json({ status, message });
   }
 
-  fs.readFile("./api-bytebank/usuarios.json", (err, data) => {
+  fs.readFile("./usuarios.json", (err, data) => {
     if (err) {
       const status = 401;
       const message = err;
@@ -58,7 +58,7 @@ server.post("/public/cadastrar", (req, res) => {
       json.usuarios.length > 0 ? json.usuarios[json.usuarios.length - 1].id : 0;
 
     json.usuarios.push({ id: ultimo_item_id + 1, email, senha, nome });
-    fs.writeFile("./api-bytebank/usuarios.json", JSON.stringify(json), (err) => {
+    fs.writeFile("./usuarios.json", JSON.stringify(json), (err) => {
       if (err) {
         const status = 401;
         const message = err;
